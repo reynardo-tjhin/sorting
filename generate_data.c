@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#define NUMBER_OF_ELEMENTS 2000000
+#define NUMBER_OF_ELEMENTS 1000000
 
 /*
 DIFFERENCE BETWEN fwrite vs fprintf!!!
