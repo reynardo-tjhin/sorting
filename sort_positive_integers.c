@@ -8,15 +8,20 @@
 
 #define MAX_BUFFER_SIZE 100
 
+// All the helper functions
 extern void generate_positive_integers_data();
 extern void calculate_time_difference(struct timespec ts_start, struct timespec ts_end);
+
+// All the sorting algorithms
 extern void selection_sort(int* arr);
 extern void bubble_sort(int* arr);
+extern void insertion_sort(int* arr);
+extern void counting_sort(int* arr);
 
 int main() {
 
     // Research: https://www.geeksforgeeks.org/sorting-algorithms/
-    
+
     generate_positive_integers_data();
 
     printf("\n");
@@ -87,7 +92,7 @@ int main() {
     // find the start time
     timespec_get(&ts_start, TIME_UTC);
     // call selection sort function
-    selection_sort(arr_copy);
+    bubble_sort(arr_copy);
     // find the end time
     timespec_get(&ts_end, TIME_UTC);
     // find the time
@@ -96,8 +101,41 @@ int main() {
     printf("\n");
 
     // insertion sort
-    // merge-sort
+    printf("Insertion Sort\n");
+    // copy the array
+    for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+        arr_copy[i] = arr[i];
+    }
+    // find the start time
+    timespec_get(&ts_start, TIME_UTC);
+    // call selection sort function
+    insertion_sort(arr_copy);
+    // find the end time
+    timespec_get(&ts_end, TIME_UTC);
+    // find the time
+    calculate_time_difference(ts_start, ts_end);
+
+    printf("\n");
+
+    // counting sort
+    printf("Counting Sort\n");
+    // copy the array
+    for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+        arr_copy[i] = arr[i];
+    }
+    // find the start time
+    timespec_get(&ts_start, TIME_UTC);
+    // call selection sort function
+    counting_sort(arr_copy);
+    // find the end time
+    timespec_get(&ts_end, TIME_UTC);
+    // find the time
+    calculate_time_difference(ts_start, ts_end);
+
     // quick sort
+
+    // merge-sort
+
     // heap sort
 
     // free the malloc'ed array
@@ -143,12 +181,69 @@ void bubble_sort(int* arr) {
     // go through each element in the array
     for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
         // swapping through each elements
-        for (int j = i; j < NUMBER_OF_ELEMENTS; j++) {
+        for (int j = 0; j < NUMBER_OF_ELEMENTS; j++) {
             if (arr[j] > arr[j + 1]) {
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
-                arr[j] = temp;
+                arr[j + 1] = temp;
             }
         }
     }
+}
+
+void insertion_sort(int* arr) {
+
+    // go through each element in the array
+    for (int i = 1; i < NUMBER_OF_ELEMENTS; i++) {
+        // get the current value
+        int current_value = arr[i];
+        // compare with the values in front
+        int j = 0;
+        int need_to_insert = 0;
+        for (j; j < i; j++) {
+            if (arr[i] < arr[j]) {
+                need_to_insert = 1;
+                break;
+            }
+        }
+        // move the values behind
+        if (need_to_insert) {
+            int temp = arr[i];
+            for (int k = j + 1; k < i + 1; k++) {
+                arr[i - k + 1] = arr[i - k];
+            }
+            arr[j] = temp;
+        }
+    }
+}
+
+void counting_sort(int* arr) {
+
+    // find the largest number
+    int largest_number = arr[0];
+    for (int i = 1; i < NUMBER_OF_ELEMENTS; i++) {
+        if (largest_number < arr[i]) {
+            largest_number = arr[i];
+        }
+    }
+    int* counting_arr = (int *) calloc(largest_number, sizeof(int));
+    if (counting_arr == NULL) {
+        printf("Error: Counting sort fails!\n");
+        return;
+    }
+    // put each element into the counting array
+    for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
+        counting_arr[ arr[i] ] += 1;
+    }
+    // sort the array
+    int index = 0;
+    for (int i = 0; i < largest_number; i++) {
+        if (counting_arr[i] != 0) {
+            for (int j = 0; j < counting_arr[i]; j++) {
+                arr[index] = i;
+                index += 1;
+            }
+        }
+    }
+    free(counting_arr);
 }

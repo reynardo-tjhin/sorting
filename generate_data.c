@@ -16,8 +16,8 @@ void generate_positive_integers_data() {
         return;
     }
 
-    time_t start;
-    start = time(&start);
+    struct timespec ts_start;
+    timespec_get(&ts_start, TIME_UTC);
 
     for (int i = 0; i < NUMBER_OF_ELEMENTS; i++) {
 
@@ -30,11 +30,18 @@ void generate_positive_integers_data() {
         }
     }
 
-    time_t end;
-    end = time(&end);
+    struct timespec ts_end;
+    timespec_get(&ts_end, TIME_UTC);
 
     fclose(fpointer);
 
     printf("Write to file successful!\n");
-    printf("Time taken: %lds\n", (end - start));
+
+    long sec = ts_end.tv_sec - ts_start.tv_sec;
+    float nanosec = ts_end.tv_nsec - ts_start.tv_nsec;
+    if (nanosec < 0) {
+        nanosec += 1000000000;
+        sec -= 1;
+    }
+    printf("Time taken: %ld.%.0fs\n", sec, nanosec);
 }
