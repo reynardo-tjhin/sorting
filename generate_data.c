@@ -1,20 +1,19 @@
 #include <stdio.h>
 #include <time.h>
 
-#define NUMBER_OF_ELEMENTS 1000000
+#define NUMBER_OF_ELEMENTS 10000
 
 /*
 DIFFERENCE BETWEN fwrite vs fprintf!!!
 fwrite is for binary data
 fprintf is for normal text
 */
+void generate_positive_integers_data() {
 
-int main() {
-
-    FILE* fpointer = fopen("data.in", "w");
+    FILE* fpointer = fopen("positive_integers.in", "w");
     if (fpointer == NULL) {
         printf("Error: File does not exist.\n");
-        return 1;
+        return;
     }
 
     time_t start;
@@ -38,6 +37,4 @@ int main() {
 
     printf("Write to file successful!\n");
     printf("Time taken: %lds\n", (end - start));
-
-    return 0;
 }
