@@ -10,7 +10,7 @@
 #define MAX_BUFFER_SIZE 100
 
 // All the helper functions
-extern void generate_positive_integers_data();
+extern void generate_positive_integers_data(); // from generate_data.c
 extern void calculate_time_difference(struct timespec ts_start, struct timespec ts_end);
 
 // All the sorting algorithms
@@ -22,8 +22,6 @@ extern void heap_sort(int* arr, int length);
 extern void merge_sort(int* arr, int length);
 
 int main() {
-
-    // Research: https://www.geeksforgeeks.org/sorting-algorithms/
 
     generate_positive_integers_data();
 
