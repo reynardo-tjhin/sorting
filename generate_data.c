@@ -35,7 +35,7 @@ void generate_positive_integers_data() {
 
     fclose(fpointer);
 
-    printf("Write to file successful!\n");
+    printf("| Write to file successful!                    |\n");
 
     long sec = ts_end.tv_sec - ts_start.tv_sec;
     float nanosec = ts_end.tv_nsec - ts_start.tv_nsec;
@@ -43,5 +43,6 @@ void generate_positive_integers_data() {
         nanosec += 1000000000;
         sec -= 1;
     }
-    printf("Time taken: %ld.%.0fs\n", sec, nanosec);
+    printf("| Time taken: %ld.%.0fs                       |\n", sec, nanosec);
+    printf("+----------------------------------------------+");
 }
