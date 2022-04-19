@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include <stdint.h>
+#include <math.h>
 
 #include "generate_data.c"
 
@@ -151,9 +152,24 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    // quick sort
+    printf("\n");
 
     // merge-sort
+    printf("Merge Sort\n");
+    // copy the array
+    for (int i = 0; i < 10; i++) {
+        arr_copy[i] = 10 - i;
+    }
+    // find the start time
+    timespec_get(&ts_start, TIME_UTC);
+    // call selection sort function
+    merge_sort(arr_copy, 10);
+    // find the end time
+    timespec_get(&ts_end, TIME_UTC);
+    // find the time
+    calculate_time_difference(ts_start, ts_end);
+
+    // quick sort
 
     // free the malloc'ed array
     free(arr_copy);
@@ -350,4 +366,69 @@ void heap_sort(int* arr, int length) {
         }
     }
     free(heap);
+}
+
+void merge_sort(int* arr, int length) {
+
+    int starting_n = 1;
+    while (starting_n < length) {
+
+        int ending_n = starting_n * 2;
+        int freq = length / ending_n;
+        if (length % ending_n > 0) { freq += 1; } // get the ceiling of the division
+        for (int i = 0; i < freq; i++) {
+
+            int index = i * ending_n; // the start index
+
+            int first_start_index = index; // the first group
+            int first_end_index = index + starting_n;
+            int second_start_index = index + starting_n; // the second group
+            int second_end_index = second_start_index + starting_n;
+
+            // create a temporary array to store the result
+            int size = ending_n;
+            if (i == freq - 1) {
+                size = length - (ending_n * i);
+            }
+            // printf("%d: %d\n", i, size);
+            int* temp_array = (int *) malloc(sizeof(int) * size);
+            for (int j = 0; j < size; j++) {
+
+                if (first_start_index == first_end_index || first_start_index >= length) {
+                    temp_array[j] = arr[second_start_index];
+                    second_start_index += 1;
+                }
+                else if (second_start_index == second_end_index || second_start_index >= length) {
+                    temp_array[j] = arr[first_start_index];
+                    first_start_index += 1;
+                }
+                else {
+                    if (arr[first_start_index] < arr[second_start_index]) {
+                        temp_array[j] = arr[first_start_index];
+                        first_start_index += 1;
+                    }
+                    else {
+                        temp_array[j] = arr[second_start_index];
+                        second_start_index += 1;
+                    }
+                }
+            }
+            // assign the values in the temp array to the original array
+            int temp_index = index;
+            for (int j = 0; j < size; j++) {
+                arr[temp_index] = temp_array[j];
+                temp_index += 1;
+            }
+            free(temp_array);
+
+            // printf("%d:[ ", i);
+            // for (int j = 0; j < size; j++) {
+            //     printf("%d ", arr[index]);
+            //     index += 1;
+            // }
+            // printf("] ");
+        }
+        // printf("\n");
+        starting_n = ending_n;
+    }
 }
