@@ -2,12 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <stdint.h>
-#include <math.h>
+#include <unistd.h>
 
 #include "generate_data.c"
 
 #define MAX_BUFFER_SIZE 100
+#define MAX_BUF_SIZE 15 // for calculating time
 
 // All the helper functions
 extern void generate_positive_integers_data(); // from generate_data.c
@@ -84,7 +84,8 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    printf("\n");
+    printf("\nSleeping for 1 second...\n\n");
+    sleep(1);
 
     // bubble sort
     printf("Bubble Sort\n");
@@ -101,7 +102,8 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    printf("\n");
+    printf("\nSleeping for 1 second...\n\n");
+    sleep(1);
 
     // insertion sort
     printf("Insertion Sort\n");
@@ -118,7 +120,8 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    printf("\n");
+    printf("\nSleeping for 1 second...\n\n");
+    sleep(1);
 
     // counting sort
     printf("Counting Sort\n");
@@ -135,7 +138,8 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    printf("\n");
+    printf("\nSleeping for 1 second...\n\n");
+    sleep(1);
 
     // heap sort
     printf("Heap Sort\n");
@@ -152,7 +156,8 @@ int main() {
     // find the time
     calculate_time_difference(ts_start, ts_end);
 
-    printf("\n");
+    printf("\nSleeping for 1 second...\n\n");
+    sleep(1);
 
     // merge-sort
     printf("Merge Sort\n");
